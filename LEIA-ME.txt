@@ -1,0 +1,172 @@
+FORBIDDEN DUEL: MEMORIES — v1.4
+
+ATUALIZAÇÃO DO SISTEMA DE DUELO
+
+Principais melhorias:
+- Correção do bug de NG+ da IA.
+- Deck do jogador exige exatamente 40 cartas.
+- Mão volta até 5 cartas no início do turno e há derrota por deck-out.
+- Fusões sequenciais corrigidas; falha preserva a última carta da sequência.
+- Fusões mão+mão e mão+campo, com resolvedor por receitas e categorias.
+- Duas Guardian Stars por monstro, escolha ao invocar e ciclos de vantagem corrigidos (+/-500).
+- Terrenos agora aplicam bônus e penalidades de 500 pontos.
+- Zona de suporte com 5 espaços para cada lado.
+- Novas armadilhas reativas e cartas de ritual.
+- IA refeita para respeitar uma jogada de mão, avaliar combate, usar fusões, traps e cartas técnicas.
+- Ranking no estilo POW/TEC (S/A/B/C/D).
+- Drops ligados ao deck do duelista e ao estilo POW/TEC.
+- Card Shop por Password ID usando estrelas.
+- Condição especial de vitória com os Cinco Selos Proibidos.
+- Compatibilidade mantida com saves anteriores.
+
+COMO JOGAR
+Abra index.html. Para hospedagem (GitHub Pages/servidor web), publique a pasta inteira mantendo a estrutura.
+
+FORBIDDEN DUEL MEMORIES 1.2
+
+COMO ABRIR
+1. Extraia a pasta inteira.
+2. Dê dois cliques em index.html.
+3. Não mova somente o index.html: mantenha as pastas css, js e assets ao lado dele.
+
+ESTRUTURA
+index.html
+css/style.css
+js/data.js
+js/game.js
+assets/*.svg
+
+O jogo não usa servidor, npm, bibliotecas externas, módulos ES, fetch ou internet.
+Isso permite funcionar por file:// no PC e também em navegadores móveis que abrem arquivos locais.
+
+NOVIDADES
+- Cartas mágicas.
+- Equipamentos.
+- Cartas de terreno.
+- Terreno pode mudar durante o duelo.
+- Bônus de equipamento persistentes no monstro.
+- Animação de fusão e batalha em tela cheia.
+- Melhorias gráficas e novo fundo local.
+- Layout aprimorado para PC e celular.
+- Continua na versão 1.2.
+
+
+ORGANIZAÇÃO DAS CARTAS
+js/registry.js        -> registra todas as cartas
+js/cartas/sol.js      -> família Solar
+js/cartas/lua.js      -> família Lunar
+js/cartas/passaro.js  -> Pássaros
+js/cartas/dragao.js   -> Dragões
+js/cartas/mago.js     -> Magos
+js/cartas/guerreiro.js
+js/cartas/aquatico.js
+js/cartas/pedra.js
+js/cartas/trevas.js
+js/cartas/fogo.js
+js/cartas/fada.js
+js/cartas/maquina.js
+js/cartas/fusoes.js
+js/cartas/magias.js
+js/cartas/equipamentos.js
+js/cartas/terrenos.js
+js/rules.js           -> fusões, oponentes, afinidades e deck inicial
+js/game.js            -> motor do jogo
+
+A versão 1.2 agora possui 88 cartas registradas em arquivos separados.
+
+
+EXPANSÃO ATUAL
+- 189 cartas registradas.
+- Filtros no Deck por família.
+- Visualizador de carta em tela cheia.
+- 6 cartas exclusivas de chefes.
+- A primeira vitória contra cada chefe garante sua carta exclusiva.
+- Recompensas normais não sorteiam cartas exclusivas de chefe.
+- Novas fusões e novos resultados de fusão.
+
+
+CAMPANHA COMPLETA
+- 18 duelistas em 6 regiões.
+- 6 chefes regionais.
+- Mapa visual de campanha.
+- Dificuldade crescente.
+- Decks diferentes por região.
+- Ranking S/A/B/C/D altera as chances de raridade no drop.
+- Chefes continuam garantindo carta exclusiva na primeira vitória.
+- Progresso salvo localmente.
+
+HISTÓRIA E DUELO
+- Prólogo narrativo.
+- Cenas de história ao entrar em cada uma das 6 regiões.
+- Diálogos especiais antes dos 6 chefes.
+- Epílogo após derrotar o Faraó Esquecido.
+- Tela de invocação com animação diferente por família.
+- Sons locais WAV para invocação, ataque, destruição, magia, fusão, chefes e diálogos.
+- Terrenos mudam visualmente o campo.
+- Batalha com câmera 2.5D aprimorada.
+- Chefes têm comportamentos especiais de IA.
+
+
+RPG / CAMPANHA AVANÇADA
+- Escolhas de história com flags persistentes.
+- Caminho secreto no desfiladeiro.
+- Evento secreto no oceano.
+- Duelista secreto com recompensa própria.
+- Duelo Livre contra adversários já encontrados.
+- New Game+ após finalizar a campanha.
+- New Game+ preserva coleção e aumenta a força dos inimigos.
+- Menu mostra New Game+ somente após zerar.
+
+
+=== v1.4 — BIBLIOTECA EXPANDIDA DE FUSÕES ===
+- Biblioteca determinística de fusões ampliada para centenas de receitas.
+- Receitas antigas/manuais continuam tendo prioridade.
+- Novas compatibilidades por família: Dragão, Guerreiro, Mago, Pássaro, Aqua, Máquina, Fada, Fogo, Rocha, Trevas, Sol e Lua.
+- Evolução por faixa de ATK: materiais mais fortes podem produzir resultados de tier superior.
+- Fusões da mesma família agora podem evoluir monstros fracos/intermediários.
+- Cadeias de 2 a 5 cartas continuam funcionando com a nova biblioteca.
+- IA passou a avaliar fusões de 2 e 3 cartas e escolher a maior evolução útil.
+- Os antigos nomes genéricos “Fusão Suprema” foram substituídos por nomes próprios.
+- Função fusionRecipesFor(id) adicionada para consulta interna de receitas/descobertas.
+
+=== NOVIDADES v1.5 ===
+- Biblioteca de Fusões acessível pelo menu principal.
+- Toda fusão bem-sucedida realizada pelo jogador é registrada automaticamente.
+- Receitas desconhecidas aparecem com resultado ??? até serem descobertas.
+- Progresso percentual de descoberta salvo no mesmo save local.
+- Busca por nome de carta, família e resultados já descobertos.
+- Filtros: Descobertas, Não Descobertas e Todas.
+- Paginação otimizada (60 receitas por página) para suportar milhares de receitas sem travar celulares/notebooks fracos.
+- Fusões encadeadas registram cada etapa bem-sucedida separadamente.
+- Compatível com saves anteriores: novos campos são migrados automaticamente.
+
+
+VERSÃO 1.6
+- sistema de loading sob demanda para menus e duelos
+- tela de loading com progresso por etapa
+- campanha, deck, registros, duelo livre, biblioteca de fusões e card shop agora são preparados apenas ao abrir
+- cada duelo carrega somente o necessário para aquela etapa/campo
+- cenas de história também passam por carregamento dedicado
+
+
+VERSÃO 1.7
+- loading estilo PS1 com carta giratória, selo egípcio e anéis animados
+- sons passam a usar preload none e são carregados apenas quando a cena/duelo precisa
+- 18 baralhos de campanha separados em arquivos js/decks/opp01.js ... opp18.js
+- somente o arquivo do adversário atual é carregado ao iniciar o duelo
+- pool de cartas por partida usa apenas cartas únicas dos dois decks + resultados técnicos de fusão/ritual necessários
+- consultas de cartas no duelo usam Map O(1), evitando DB.find no catálogo inteiro
+- pool e baralho inimigo são liberados ao sair do duelo
+- 6 mil+ receitas geradas de fusão não são mais construídas no boot nem durante o duelo
+- biblioteca total de fusões é materializada somente ao abrir Biblioteca de Fusões ou Registros
+
+
+VERSÃO 1.8 — REORGANIZAÇÃO TÉCNICA
+- JS reorganizado por responsabilidade: core, data, systems, ui e content.
+- arquivos upgrade-vXX removidos da estrutura final.
+- bug de reabertura/atualização dos menus com cache corrigido.
+- decks inimigos agora são fonte absoluta: nenhuma carta técnica é injetada fora das 40 definidas.
+- pool de duelo estrito: cartas fora do duelo não são buscadas silenciosamente no catálogo global.
+- pool liberado antes da tela de recompensa para manter drops e coleção funcionando.
+- removido preload indiscriminado de todos os monstros de fusão; entram apenas resultados alcançáveis.
+- caminhos dos 18 decks migrados para js/content/decks/.

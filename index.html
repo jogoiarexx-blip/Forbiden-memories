@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090812">
+<title>Forbidden Duel: Memories 1.8</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+<section id="title" class="screen">
+ <div class="millennium">𓂀</div>
+ <div class="logo">
+  <div class="small">Ancient Card Battle</div>
+  <h1>Forbidden Duel<span>MEMORIES</span></h1>
+  <div class="sub">PC + Mobile Edition</div>
+ </div>
+ <div class="menuBox ornate">
+  <button class="menuBtn primary" onclick="openOpponent()">Campanha / Duelo</button>
+  <button class="menuBtn" onclick="openDeck()">Deck</button>
+  <button class="menuBtn" onclick="openRecords()">Registros</button>
+  <button class="menuBtn" onclick="openFusionLibrary()">Biblioteca de Fusões</button>
+  <button class="menuBtn" onclick="openFreeDuel()">Duelo Livre</button>
+  <button class="menuBtn" onclick="openPasswordShop()">Password / Card Shop</button>
+  <button id="btnNGPlus" class="menuBtn" style="display:none" onclick="startNewGamePlus()">New Game+</button>
+  <button class="menuBtn" onclick="newSave()">Novo Jogo</button>
+ </div>
+ <div class="version">VERSÃO 1.8 • JS REORGANIZADO • LOADING + DUEL POOL OTIMIZADOS • PC + MOBILE</div>
+</section>
+
+<section id="opponents" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Campanha</h2><span style="width:44px"></span></div>
+ <div class="campaignWrap">
+   <div class="campaignHeader ornate">
+     <div><b id="campaignRegion">Aldeia do Sol</b><span id="campaignProgress">0 / 18</span></div>
+     <div class="campaignStars">★ <span id="campaignStars">0</span></div>
+   </div>
+   <div id="campaignMap" class="campaignMap"></div>
+   <div id="campaignInfo" class="campaignInfo ornate"></div>
+ </div>
+</section>
+
+<section id="deckScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Deck</h2><button class="iconbtn" onclick="resetDeck()">↻</button></div>
+ <div class="contentScroll">
+  <div class="deckStats ornate">
+   <div class="statBox"><b id="deckCount">40</b><span>CARTAS</span></div>
+   <div class="statBox"><b id="deckPower">0</b><span>PODER MÉDIO</span></div>
+   <div class="statBox"><b id="starCount">0</b><span>ESTRELAS</span></div>
+  </div>
+  <div class="deckHint">Toque numa carta para adicionar/remover. Segure ou use o botão 👁 para ampliar.</div>
+  <div id="deckFilters" class="deckFilters">
+    <button class="filterBtn active" data-filter="all">TODAS</button>
+    <button class="filterBtn" data-filter="sol">SOL</button>
+    <button class="filterBtn" data-filter="lua">LUA</button>
+    <button class="filterBtn" data-filter="dragao">DRAGÃO</button>
+    <button class="filterBtn" data-filter="passaro">PÁSSARO</button>
+    <button class="filterBtn" data-filter="mago">MAGO</button>
+    <button class="filterBtn" data-filter="guerreiro">GUERREIRO</button>
+    <button class="filterBtn" data-filter="aquatico">ÁGUA</button>
+    <button class="filterBtn" data-filter="trevas">TREVAS</button>
+    <button class="filterBtn" data-filter="fogo">FOGO</button>
+    <button class="filterBtn" data-filter="maquina">MÁQUINA</button>
+    <button class="filterBtn" data-filter="special">MAGIA/TRAP/EQUIP</button>
+    <button class="filterBtn" data-filter="chefes">CHEFES</button>
+  </div>
+
+  <div id="library" class="cardGrid"></div>
+ </div>
+</section>
+
+
+<section id="freeDuelScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Duelo Livre</h2><span style="width:44px"></span></div>
+ <div class="contentScroll">
+   <div class="deckHint">Enfrente qualquer duelista já encontrado. Duelo Livre não altera o progresso da campanha, mas pode render estrelas reduzidas.</div>
+   <div id="freeDuelList"></div>
+ </div>
+</section>
+
+
+<section id="passwordScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Password / Card Shop</h2><span style="width:44px"></span></div>
+ <div class="contentScroll">
+  <div class="ornate shopBox">
+   <h3>TERMINAL DE CARTAS</h3>
+   <p>Digite o código de uma carta. Cada carta possui um custo em estrelas conforme sua raridade.</p>
+   <input id="passwordInput" class="passwordInput" maxlength="6" inputmode="numeric" placeholder="ID DA CARTA">
+   <button class="menuBtn primary" onclick="redeemPassword()">OBTER CARTA</button>
+   <div id="passwordResult" class="deckHint"></div>
+  </div>
+ </div>
+</section>
+
+
+<section id="fusionLibraryScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Biblioteca de Fusões</h2><span style="width:44px"></span></div>
+ <div class="contentScroll fusionLibraryWrap">
+  <div class="ornate fusionProgressBox">
+   <div id="fusionLibraryStats" class="fusionLibraryStats"></div>
+   <div class="fusionProgressTrack"><div id="fusionProgressFill" class="fusionProgressFill"></div></div>
+   <p>Realize fusões durante os duelos para revelar as receitas. Resultados ainda não descobertos permanecem ocultos como <b>???</b>.</p>
+  </div>
+  <input id="fusionLibrarySearch" class="fusionSearch" placeholder="Buscar por carta, família ou resultado descoberto..." oninput="fusionLibrarySearch(this.value)">
+  <div id="fusionLibraryFilters" class="deckFilters fusionLibraryFilters">
+   <button class="filterBtn active" data-ffilter="discovered" onclick="setFusionLibraryFilter('discovered')">DESCOBERTAS</button>
+   <button class="filterBtn" data-ffilter="unknown" onclick="setFusionLibraryFilter('unknown')">NÃO DESCOBERTAS</button>
+   <button class="filterBtn" data-ffilter="all" onclick="setFusionLibraryFilter('all')">TODAS</button>
+  </div>
+  <div id="fusionLibraryList" class="fusionLibraryList"></div>
+  <div class="fusionPager ornate"><button id="fusionPrev" onclick="fusionLibraryPrev()">← ANTERIOR</button><span id="fusionLibraryPage">Página 1</span><button id="fusionNext" onclick="fusionLibraryNext()">PRÓXIMA →</button></div>
+ </div>
+</section>
+
+<section id="records" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Registros</h2><span style="width:44px"></span></div>
+ <div class="contentScroll"><div id="recordBox" class="ornate" style="padding:14px;line-height:2;font-size:12px"></div></div>
+</section>
+
+<section id="duel" class="screen hidden">
+ <div class="duelHud">
+  <div class="portrait" id="enemyPortrait">👁</div>
+  <div class="hudInfo"><div class="hudName"><span id="enemyName">Guardião</span><span>LP</span></div><div class="lpTrack"><div id="enemyLPFill" class="lpFill" style="width:100%"></div></div></div>
+  <div id="enemyLP" class="lpNum">8000</div>
+ </div>
+
+ <div id="board">
+   <div id="enemyZone" class="zone enemy"></div>
+   <div id="enemySupport" class="zone support enemySupport"></div>
+   <div class="centerLine"><span id="fieldText">★ CAMPO NEUTRO ★</span></div>
+   <div id="playerSupport" class="zone support playerSupport"></div>
+   <div id="playerZone" class="zone player"></div>
+   <div id="message"></div>
+   <div id="fusionTray" class="hidden"></div>
+ </div>
+
+ <div class="phaseStrip"><span id="phaseLabel">MAIN PHASE</span><span id="turnLabel">TURNO 1</span></div>
+ <div class="cardHandArea">
+   <div class="handTitle">SUA MÃO — TOQUE NAS CARTAS</div>
+   <div id="hand"></div>
+ </div>
+ <div class="controls">
+   <button id="btnPlay" class="action hot" onclick="playSelection()">JOGAR</button>
+   <button id="btnFusion" class="action" onclick="toggleFusionMode()">FUSÃO</button>
+   <button id="btnAttack" class="action red" onclick="beginAttack()">ATACAR</button>
+   <button id="btnFlip" class="action" onclick="changePosition()">POSIÇÃO</button>
+   <button id="btnEnd" class="action" onclick="endTurn()">FIM</button>
+ </div>
+ <div class="duelHud player">
+  <div class="portrait">🧑</div>
+  <div class="hudInfo"><div class="hudName"><span>VOCÊ</span><span>LP</span></div><div class="lpTrack"><div id="playerLPFill" class="lpFill" style="width:100%"></div></div></div>
+  <div id="playerLP" class="lpNum">8000</div>
+ </div>
+</section>
+
+<div id="choice" class="hidden">
+ <div class="modal ornate">
+  <h3 id="choiceTitle">POSIÇÃO</h3>
+  <p id="choiceText">Escolha como colocar a carta no campo.</p>
+  <div id="choiceButtons" class="choiceBtns"></div>
+ </div>
+</div>
+
+<div id="resultModal" class="hidden">
+ <div class="modal ornate">
+  <h3 id="resultTitle">VITÓRIA</h3>
+  <div id="rankBadge" class="rankBadge">A</div>
+  <p id="resultText"></p>
+  <div id="rewardArea"></div>
+  <div class="choiceBtns">
+   <button class="bigChoice" onclick="returnAfterDuel()"><b>CONTINUAR</b>Voltar à campanha</button>
+   <button class="bigChoice" onclick="showScreen('title');hideResult()"><b>MENU</b>Tela inicial</button>
+  </div>
+ </div>
+</div>
+
+</div>
+
+<div id="loadingOverlay" class="loadingOverlay hidden" aria-live="polite">
+  <div class="loadingPanel ornate">
+    <div class="loadingStage">
+      <div class="loadingSigil">𓂀</div>
+      <div class="loadingCard"><img src="assets/card-back.svg" alt=""><span>MEMORIES</span></div>
+      <div class="loadingRing loadingRingA"></div>
+      <div class="loadingRing loadingRingB"></div>
+    </div>
+    <div id="loadingTitle" class="loadingTitle">CARREGANDO</div>
+    <div id="loadingStep" class="loadingStep">Preparando recursos...</div>
+    <div class="loadingTrack"><div id="loadingBar" class="loadingBar"></div></div>
+    <div class="loadingMeta"><span id="loadingPercent">0%</span><span id="loadingHint">Os recursos são carregados sob demanda para cada menu e duelo.</span></div>
+  </div>
+</div>
+
+<div id="storyScreen" class="storyScreen hidden">
+  <div class="storyBackdrop"></div>
+  <div class="storyScene">
+    <div id="storyRegionTitle" class="storyRegionTitle"></div>
+    <div id="storyPortrait" class="storyPortrait">📜</div>
+    <div class="storyDialogue ornate">
+      <div id="storySpeaker" class="storySpeaker">Narrador</div>
+      <div id="storyText" class="storyText"></div>
+      <div id="storyChoices" class="storyChoices"></div><div class="storyActions">
+        <button id="storySkip" onclick="skipStory()">PULAR</button>
+        <button id="storyNext" onclick="nextStoryLine()">CONTINUAR ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cardViewer" class="cardViewer hidden">
+  <div class="viewerBackdrop" onclick="closeCardViewer()"></div>
+  <div class="viewerPanel ornate">
+    <button class="viewerClose" onclick="closeCardViewer()">×</button>
+    <div id="viewerCard" class="viewerCard"></div>
+    <div id="viewerInfo" class="viewerInfo"></div>
+  </div>
+</div>
+
+<div id="cinematic" class="cinematic hidden">
+  <div class="cineFrame">
+    <div class="cineLabel" id="cineLabel">BATTLE</div>
+    <div class="cineStage">
+      <div id="cineLeft" class="cineCard"></div>
+      <div id="cineFx" class="cineFx">⚡</div>
+      <div id="cineRight" class="cineCard"></div>
+    </div>
+    <div id="cineText" class="cineText"></div>
+  </div>
+</div>
+
+<script src="js/data/card-registry.js"></script>
+<script src="js/content/cards/aquatico.js"></script>
+<script src="js/content/cards/dragao.js"></script>
+<script src="js/content/cards/equipamentos.js"></script>
+<script src="js/content/cards/chefes.js"></script>
+<script src="js/content/cards/fada.js"></script>
+<script src="js/content/cards/fogo.js"></script>
+<script src="js/content/cards/fusoes.js"></script>
+<script src="js/content/cards/guerreiro.js"></script>
+<script src="js/content/cards/lua.js"></script>
+<script src="js/content/cards/magias.js"></script>
+<script src="js/content/cards/armadilhas.js"></script>
+<script src="js/content/cards/rituais.js"></script>
+<script src="js/content/cards/reliquias.js"></script>
+<script src="js/content/cards/mago.js"></script>
+<script src="js/content/cards/maquina.js"></script>
+<script src="js/content/cards/passaro.js"></script>
+<script src="js/content/cards/pedra.js"></script>
+<script src="js/content/cards/sol.js"></script>
+<script src="js/content/cards/terrenos.js"></script>
+<script src="js/content/cards/trevas.js"></script>
+<script src="js/data/story.js"></script>
+<script src="js/data/rules.js"></script>
+<script src="js/core/game.js"></script>
+<script src="js/systems/duel-rules.js"></script>
+<script src="js/systems/fusion-engine.js"></script>
+<script src="js/ui/fusion-library.js"></script>
+<script src="js/core/loader.js"></script>
+<script src="js/core/runtime.js"></script>
+</body>
+</html>

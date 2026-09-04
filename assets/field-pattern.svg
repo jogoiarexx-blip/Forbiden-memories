@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420">
+<g fill="none" stroke="#c69a4d" stroke-opacity=".06">
+<circle cx="210" cy="210" r="150"/><circle cx="210" cy="210" r="92"/>
+<path d="M210 35L251 156L382 156L276 232L317 355L210 280L103 355L144 232L38 156L169 156Z"/>
+<path d="M0 210H420M210 0V420"/>
+</g></svg>

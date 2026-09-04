@@ -1,0 +1,80 @@
+registerCards([
+  {
+    "id": 402,
+    "n": "Discípulo Supremo",
+    "a": 2200,
+    "d": 2100,
+    "t": "Guerreiro",
+    "g": "Sol",
+    "e": "Luz",
+    "art": "🧑‍🦲",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 0
+  },
+  {
+    "id": 403,
+    "n": "Olho da Cripta Eterna",
+    "a": 2450,
+    "d": 2350,
+    "t": "Demônio",
+    "g": "Plutão",
+    "e": "Trevas",
+    "art": "👁️",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 1
+  },
+  {
+    "id": 404,
+    "n": "Arquimago do Véu Negro",
+    "a": 2700,
+    "d": 2400,
+    "t": "Mago",
+    "g": "Mercúrio",
+    "e": "Trevas",
+    "art": "🧙",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 2
+  },
+  {
+    "id": 405,
+    "n": "Colosso do Pico Celeste",
+    "a": 2850,
+    "d": 2800,
+    "t": "Rocha",
+    "g": "Urano",
+    "e": "Terra",
+    "art": "🗿",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 3
+  },
+  {
+    "id": 406,
+    "n": "Rei Leviatã Abissal",
+    "a": 3000,
+    "d": 2700,
+    "t": "Aqua",
+    "g": "Netuno",
+    "e": "Água",
+    "art": "🌊",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 4
+  },
+  {
+    "id": 407,
+    "n": "Avatar do Faraó Esquecido",
+    "a": 3200,
+    "d": 3000,
+    "t": "Guerreiro",
+    "g": "Sol",
+    "e": "Luz",
+    "art": "👑",
+    "rarity": "BOSS",
+    "family": "chefes",
+    "bossExclusive": 5
+  }
+]);
