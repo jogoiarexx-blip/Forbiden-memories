@@ -1,5 +1,5 @@
 /* Forbidden Duel Memories v1.7 — PS1 Loading + Duel Card Pool + Lazy Enemy Decks */
-const V18_RUNTIME_VERSION='1.8';
+const V19_RUNTIME_VERSION='1.9';
 const V17_FULL_C=C;
 let V17_DUEL_CARD_MAP=null;
 let V17_DUEL_POOL_INFO=null;
@@ -66,8 +66,8 @@ function prepareDuelCardPool(playerDeck,enemyDeck,profile={}){
     lazyLoads:0,
     opponent:profile.name||'Duelista'
   };
-  save.gameVersion=V18_RUNTIME_VERSION;
-  console.info('v1.8 duel card pool ready',V17_DUEL_POOL_INFO);
+  save.gameVersion=V19_RUNTIME_VERSION;
+  console.info('v1.9 duel card pool ready',V17_DUEL_POOL_INFO);
   const hint=document.getElementById('loadingHint');
   if(hint)hint.textContent=`Pool ativo: ${map.size} cartas necessárias nesta partida (catálogo completo: ${DB.length}).`;
   return V17_DUEL_POOL_INFO;
@@ -75,7 +75,7 @@ function prepareDuelCardPool(playerDeck,enemyDeck,profile={}){
 window.prepareDuelCardPool=prepareDuelCardPool;
 
 function releaseDuelCardPool(){
-  if(V17_DUEL_CARD_MAP)console.info('v1.8 duel card pool released',V17_DUEL_POOL_INFO);
+  if(V17_DUEL_CARD_MAP)console.info('v1.9 duel card pool released',V17_DUEL_POOL_INFO);
   V17_DUEL_CARD_MAP=null;V17_DUEL_POOL_INFO=null;
 }
 window.releaseDuelCardPool=releaseDuelCardPool;
@@ -136,11 +136,11 @@ document.addEventListener('click',ev=>{
 
 // Full fusion recipes are materialized by v1.6's visible menu loading steps.
 
-save.gameVersion=V18_RUNTIME_VERSION;persist();
-console.info('Forbidden Duel Memories v1.8 runtime loaded',{cards:DB.length,opponents:OPP.length});
+save.gameVersion=V19_RUNTIME_VERSION;persist();
+console.info('Forbidden Duel Memories v1.9 runtime loaded',{cards:DB.length,opponents:OPP.length});
 
 
-/* v1.8 strict lifecycle: release compact lookup before reward/result code. */
+/* v1.9 strict lifecycle: release compact lookup before reward/result code. */
 const v18FinishBase=finish;
 finish=function(win,reason=''){
   releaseDuelCardPool();

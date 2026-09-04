@@ -170,3 +170,28 @@ VERSÃO 1.8 — REORGANIZAÇÃO TÉCNICA
 - pool liberado antes da tela de recompensa para manter drops e coleção funcionando.
 - removido preload indiscriminado de todos os monstros de fusão; entram apenas resultados alcançáveis.
 - caminhos dos 18 decks migrados para js/content/decks/.
+
+
+VERSÃO 1.9
+- arena de duelo redesenhada em perspectiva inspirada na apresentação de card games de PS1
+- HUD compacta com LP e contagem de deck
+- mão horizontal ampliada na parte inferior
+- barra de informações dinâmica da carta selecionada
+- comandos compactos e menos intrusivos
+- melhor leitura do terreno, turnos e seleção de alvos
+- responsividade refeita para desktop, notebook e celular
+
+
+VERSÃO 2.0 — OPÇÕES
+- nova tela Opções no menu principal
+- qualidade gráfica: Automática / Baixa / Média / Alta
+- escala visual: Automática / 720p / 900p / 1080p
+- efeitos visuais: Baixo / Médio / Alto
+- sombras/brilho e reduzir animações
+- modos Econômico / Equilibrado / Qualidade
+- FPS alvo 30 / 60 / Automático
+- velocidade de animações Rápida / Normal / Cinemática
+- tela cheia via Fullscreen API
+- volume geral, efeitos sonoros, música e mute
+- perfil automático baseado em CPU, memória disponível no navegador e tamanho de tela
+- configurações persistentes em localStorage

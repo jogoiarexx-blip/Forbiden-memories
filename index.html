@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090812">
-<title>Forbidden Duel: Memories 1.8</title>
+<title>Forbidden Duel: Memories 2.0</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,10 +25,11 @@
   <button class="menuBtn" onclick="openFusionLibrary()">Biblioteca de Fusões</button>
   <button class="menuBtn" onclick="openFreeDuel()">Duelo Livre</button>
   <button class="menuBtn" onclick="openPasswordShop()">Password / Card Shop</button>
+  <button class="menuBtn" onclick="openOptions()">Opções</button>
   <button id="btnNGPlus" class="menuBtn" style="display:none" onclick="startNewGamePlus()">New Game+</button>
   <button class="menuBtn" onclick="newSave()">Novo Jogo</button>
  </div>
- <div class="version">VERSÃO 1.8 • JS REORGANIZADO • LOADING + DUEL POOL OTIMIZADOS • PC + MOBILE</div>
+ <div class="version">VERSÃO 2.0 • OPÇÕES • PERFORMANCE • ÁUDIO • PC + MOBILE</div>
 </section>
 
 <section id="opponents" class="screen hidden">
@@ -115,44 +116,90 @@
  </div>
 </section>
 
+<section id="optionsScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="closeOptions()">←</button><h2>Opções</h2><button class="iconbtn" title="Restaurar padrões" onclick="resetGameSettings()">↻</button></div>
+ <div class="contentScroll optionsWrap">
+  <div class="optionsGrid">
+   <div class="optionPanel ornate">
+    <h3>GRÁFICOS</h3>
+    <label class="optionRow"><span><b>Qualidade gráfica</b><small>Ajusta sombras, filtros e efeitos.</small></span><select id="optGraphics" onchange="setGameSetting('graphics',this.value)"><option value="auto">Automática</option><option value="low">Baixa</option><option value="medium">Média</option><option value="high">Alta</option></select></label>
+    <label class="optionRow"><span><b>Escala / resolução</b><small>Reduz a escala visual em telas mais fracas.</small></span><select id="optResolution" onchange="setGameSetting('resolution',this.value)"><option value="auto">Automática</option><option value="720">720p</option><option value="900">900p</option><option value="1080">1080p</option></select></label>
+    <label class="optionRow"><span><b>Efeitos visuais</b><small>Controla brilho, partículas CSS e efeitos de arena.</small></span><select id="optEffects" onchange="setGameSetting('effects',this.value)"><option value="low">Baixo</option><option value="medium">Médio</option><option value="high">Alto</option></select></label>
+    <label class="optionRow"><span><b>Sombras e brilho</b><small>Desative em notebooks mais fracos.</small></span><input id="optGlow" type="checkbox" onchange="setGameSetting('glow',this.checked)"></label>
+    <label class="optionRow"><span><b>Reduzir animações</b><small>Remove movimentos e transições mais pesadas.</small></span><input id="optReducedMotion" type="checkbox" onchange="setGameSetting('reducedMotion',this.checked)"></label>
+   </div>
+
+   <div class="optionPanel ornate">
+    <h3>DESEMPENHO</h3>
+    <label class="optionRow"><span><b>Modo de performance</b><small>Prioriza economia, equilíbrio ou qualidade.</small></span><select id="optPerformance" onchange="setGameSetting('performance',this.value)"><option value="economy">Econômico</option><option value="balanced">Equilibrado</option><option value="quality">Qualidade</option></select></label>
+    <label class="optionRow"><span><b>FPS alvo</b><small>Em 30 FPS, o jogo reduz animações desnecessárias.</small></span><select id="optFps" onchange="setGameSetting('fps',this.value)"><option value="auto">Automático</option><option value="30">30 FPS</option><option value="60">60 FPS</option></select></label>
+    <label class="optionRow"><span><b>Velocidade das animações</b><small>Não altera regras ou tempo dos turnos.</small></span><select id="optAnimSpeed" onchange="setGameSetting('animationSpeed',this.value)"><option value="fast">Rápida</option><option value="normal">Normal</option><option value="cinematic">Cinemática</option></select></label>
+    <div class="optionRow optionAction"><span><b>Tela cheia</b><small>Usa a tela inteira do dispositivo.</small></span><button id="fullscreenBtn" class="optionButton" onclick="toggleGameFullscreen()">ATIVAR</button></div>
+    <div class="hardwareBox"><b>PERFIL AUTOMÁTICO</b><span id="hardwareProfile">Detectando...</span><small id="hardwareDetail"></small></div>
+   </div>
+
+   <div class="optionPanel ornate">
+    <h3>ÁUDIO</h3>
+    <label class="optionSlider"><span><b>Volume geral</b><output id="masterVolumeOut">100%</output></span><input id="optMasterVolume" type="range" min="0" max="100" step="1" oninput="setGameSetting('masterVolume',Number(this.value))"></label>
+    <label class="optionSlider"><span><b>Efeitos sonoros</b><output id="sfxVolumeOut">70%</output></span><input id="optSfxVolume" type="range" min="0" max="100" step="1" oninput="setGameSetting('sfxVolume',Number(this.value))"></label>
+    <label class="optionSlider"><span><b>Música</b><output id="musicVolumeOut">60%</output></span><input id="optMusicVolume" type="range" min="0" max="100" step="1" oninput="setGameSetting('musicVolume',Number(this.value))"></label>
+    <label class="optionRow"><span><b>Silenciar tudo</b><small>Desativa efeitos e futuras músicas do jogo.</small></span><input id="optMuted" type="checkbox" onchange="setGameSetting('muted',this.checked)"></label>
+    <button class="optionButton audioTest" onclick="testGameAudio()">TESTAR SOM</button>
+   </div>
+  </div>
+  <div class="optionsFooter ornate"><span>As opções são salvas automaticamente neste aparelho.</span><button class="menuBtn primary" onclick="closeOptions()">SALVAR E VOLTAR</button></div>
+ </div>
+</section>
+
 <section id="records" class="screen hidden">
  <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Registros</h2><span style="width:44px"></span></div>
  <div class="contentScroll"><div id="recordBox" class="ornate" style="padding:14px;line-height:2;font-size:12px"></div></div>
 </section>
 
-<section id="duel" class="screen hidden">
- <div class="duelHud">
-  <div class="portrait" id="enemyPortrait">👁</div>
-  <div class="hudInfo"><div class="hudName"><span id="enemyName">Guardião</span><span>LP</span></div><div class="lpTrack"><div id="enemyLPFill" class="lpFill" style="width:100%"></div></div></div>
-  <div id="enemyLP" class="lpNum">8000</div>
+<section id="duel" class="screen hidden ps1Duel">
+ <div class="ps1Void"></div>
+
+ <div class="ps1FieldPanel">
+   <b>FIELD</b>
+   <span id="fieldText">PRADARIA</span>
  </div>
 
- <div id="board">
+ <div class="ps1StatusPanel">
+   <div class="statusRow enemyStatus"><span class="statusTag">COM</span><span id="enemyName" class="statusName">Guardião</span><span class="deckLabel">D</span><b id="enemyDeckCount">40</b><span class="lpLabel">LP</span><strong id="enemyLP">8000</strong></div>
+   <div class="statusRow playerStatus"><span class="statusTag">YOU</span><span class="statusName">VOCÊ</span><span class="deckLabel">D</span><b id="playerDeckCount">35</b><span class="lpLabel">LP</span><strong id="playerLP">8000</strong></div>
+   <div class="hiddenLegacyHud"><div id="enemyPortrait">👁</div><div id="enemyLPFill"></div><div id="playerLPFill"></div></div>
+ </div>
+
+ <div class="phaseStrip"><span id="phaseLabel">MAIN PHASE</span><span id="turnLabel">TURNO 1</span></div>
+
+ <div id="board" class="ps1Board">
+   <div class="boardSurfaceDecor"></div>
    <div id="enemyZone" class="zone enemy"></div>
    <div id="enemySupport" class="zone support enemySupport"></div>
-   <div class="centerLine"><span id="fieldText">★ CAMPO NEUTRO ★</span></div>
+   <div class="centerLine"><span>◇ FORBIDDEN DUEL ◇</span></div>
    <div id="playerSupport" class="zone support playerSupport"></div>
    <div id="playerZone" class="zone player"></div>
    <div id="message"></div>
    <div id="fusionTray" class="hidden"></div>
  </div>
 
- <div class="phaseStrip"><span id="phaseLabel">MAIN PHASE</span><span id="turnLabel">TURNO 1</span></div>
- <div class="cardHandArea">
-   <div class="handTitle">SUA MÃO — TOQUE NAS CARTAS</div>
+ <div class="cardHandArea ps1HandDock">
+   <div class="handTitle">SUA MÃO</div>
    <div id="hand"></div>
  </div>
- <div class="controls">
-   <button id="btnPlay" class="action hot" onclick="playSelection()">JOGAR</button>
-   <button id="btnFusion" class="action" onclick="toggleFusionMode()">FUSÃO</button>
-   <button id="btnAttack" class="action red" onclick="beginAttack()">ATACAR</button>
-   <button id="btnFlip" class="action" onclick="changePosition()">POSIÇÃO</button>
-   <button id="btnEnd" class="action" onclick="endTurn()">FIM</button>
+
+ <div class="controls ps1CommandPanel">
+   <button id="btnPlay" class="action hot" onclick="playSelection()"><span>▶</span> JOGAR</button>
+   <button id="btnFusion" class="action" onclick="toggleFusionMode()"><span>✦</span> FUSÃO</button>
+   <button id="btnAttack" class="action red" onclick="beginAttack()"><span>⚔</span> ATACAR</button>
+   <button id="btnFlip" class="action" onclick="changePosition()"><span>↻</span> POSIÇÃO</button>
+   <button id="btnEnd" class="action" onclick="endTurn()"><span>■</span> FIM</button>
  </div>
- <div class="duelHud player">
-  <div class="portrait">🧑</div>
-  <div class="hudInfo"><div class="hudName"><span>VOCÊ</span><span>LP</span></div><div class="lpTrack"><div id="playerLPFill" class="lpFill" style="width:100%"></div></div></div>
-  <div id="playerLP" class="lpNum">8000</div>
+
+ <div class="ps1CardInfo" id="duelCardInfo">
+   <div class="infoName" id="duelInfoName">SELECIONE UMA CARTA</div>
+   <div class="infoStats"><span id="duelInfoAtk">⚔ ---</span><span id="duelInfoDef">▣ ---</span></div>
+   <div class="infoMeta"><span id="duelInfoType">---</span><span id="duelInfoGuardian">★ ---</span><span id="duelInfoElement">---</span></div>
  </div>
 </section>
 
@@ -260,5 +307,7 @@
 <script src="js/ui/fusion-library.js"></script>
 <script src="js/core/loader.js"></script>
 <script src="js/core/runtime.js"></script>
+<script src="js/core/settings.js"></script>
+<script src="js/ui/duel-screen.js"></script>
 </body>
 </html>

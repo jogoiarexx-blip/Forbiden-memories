@@ -1,6 +1,6 @@
 /* Forbidden Duel Memories v1.6 — Smart loading system
    Loads menus, stories and duel packages on demand with visible progress. */
-const LOADER_VERSION='1.8';
+const LOADER_VERSION='1.9';
 
 (function(){
 const LOAD_STATE={busy:false, cache:{}};
@@ -213,5 +213,5 @@ setTimeout(()=>{
   ]);
 },0);
 
-console.info('Forbidden Duel Memories v1.8 smart loading loaded');
+console.info('Forbidden Duel Memories v1.9 smart loading loaded');
 })();
