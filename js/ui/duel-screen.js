@@ -1,6 +1,6 @@
 /* Forbidden Duel Memories v1.9 — PS1-inspired duel presentation */
 (function(){
-const V19_VERSION='1.9';
+const V19_VERSION='2.3';
 let hoverCardId=null;
 
 function duelVisible(){const d=document.getElementById('duel');return d&&!d.classList.contains('hidden')}
@@ -64,7 +64,63 @@ document.addEventListener('keydown',ev=>{
 const baseHandTap=handTap;
 handTap=function(i){const r=baseHandTap(i);requestAnimationFrame(()=>{const el=document.querySelectorAll('#hand .boardCard')[i];el?.scrollIntoView?.({behavior:'smooth',block:'nearest',inline:'center'});updateDuelInspector();});return r};
 
+
+
+/* v2.3 camera director: the summon is shown on the full board from above. */
+let v23CameraTimer=null,v23CameraBusy=false;
+function v23ReducedMotion(){return !!(window.GAME_SETTINGS?.reducedMotion||document.body.classList.contains('reduceMotion'))}
+function v23GetSummonSlot(unit,enemy){
+  if(!S||!unit)return null;
+  const field=enemy?S.eField:S.pField,index=field.findIndex(u=>u===unit);
+  if(index<0)return null;
+  const zone=document.getElementById(enemy?'enemyZone':'playerZone');
+  return zone?.children?.[index]||null;
+}
+function v23CameraBanner(text,sub=''){
+  let el=document.getElementById('v23CameraBanner');
+  if(!el){el=document.createElement('div');el.id='v23CameraBanner';el.className='v23CameraBanner';document.getElementById('duel')?.appendChild(el)}
+  el.innerHTML=`<b>${text}</b>${sub?`<span>${sub}</span>`:''}`;el.classList.add('show');return el;
+}
+function v23TopDownSummon(card,unit,enemy=false){
+  const duel=document.getElementById('duel');if(!duel||duel.classList.contains('hidden'))return;
+  clearTimeout(v23CameraTimer);v23CameraBusy=true;
+  duel.classList.add('cameraTopDown');duel.classList.toggle('cameraEnemy',!!enemy);
+  const banner=v23CameraBanner(enemy?'ENEMY SUMMON':'SUMMON',card?.n||'');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const slot=v23GetSummonSlot(unit,enemy);slot?.classList.add('summonFocus');
+    if(v23ReducedMotion()){
+      v23CameraTimer=setTimeout(()=>{slot?.classList.remove('summonFocus');banner?.classList.remove('show');duel.classList.remove('cameraTopDown','cameraEnemy');v23CameraBusy=false},420);
+      return;
+    }
+    v23CameraTimer=setTimeout(()=>{
+      slot?.classList.remove('summonFocus');banner?.classList.remove('show');duel.classList.add('cameraReturning');
+      setTimeout(()=>{duel.classList.remove('cameraTopDown','cameraEnemy','cameraReturning');v23CameraBusy=false},560);
+    },1050);
+  }));
+}
+const v23BaseSummonCinematic=playSummonCinematic;
+playSummonCinematic=function(c,u,enemy=false){
+  if(duelVisible()){
+    v23TopDownSummon(c,u,enemy);
+    return;
+  }
+  return v23BaseSummonCinematic(c,u,enemy);
+};
+
+// Keep normal battle/fusion cinematics, but make sure the camera is reset first.
+function v23ResetCamera(){
+  const duel=document.getElementById('duel');if(!duel)return;
+  clearTimeout(v23CameraTimer);duel.classList.remove('cameraTopDown','cameraEnemy','cameraReturning');
+  document.getElementById('v23CameraBanner')?.classList.remove('show');
+  document.querySelectorAll('#duel .summonFocus').forEach(e=>e.classList.remove('summonFocus'));v23CameraBusy=false;
+}
+const v23BaseBattleCinematic=playBattleCinematic;
+playBattleCinematic=function(...args){v23ResetCamera();return v23BaseBattleCinematic(...args)};
+const v23BaseFusionCinematic=playFusionCinematic;
+playFusionCinematic=function(...args){v23ResetCamera();return v23BaseFusionCinematic(...args)};
+
+
 save.gameVersion=V19_VERSION;persist();
 setTimeout(updatePS1Hud,0);
-console.info('Forbidden Duel Memories v1.9 PS1 duel UI loaded');
+console.info('Forbidden Duel Memories v2.3 arena + top-down camera loaded');
 })();

@@ -714,6 +714,7 @@ function returnAfterDuel(){hideResult();if(freeDuelMode)openFreeDuel();else open
 
 // Controles de teclado para PC (mantém toque no celular)
 document.addEventListener("keydown",(ev)=>{
+  if(window.FDM_CONTROLS_ACTIVE) return;
   if(document.getElementById("duel").classList.contains("hidden") || !S || S.over) return;
   if(!document.getElementById("choice").classList.contains("hidden")){
     if(ev.key==="Escape") document.getElementById("choice").classList.add("hidden");

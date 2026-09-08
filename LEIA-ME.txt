@@ -195,3 +195,32 @@ VERSÃO 2.0 — OPÇÕES
 - volume geral, efeitos sonoros, música e mute
 - perfil automático baseado em CPU, memória disponível no navegador e tamanho de tela
 - configurações persistentes em localStorage
+
+
+VERSÃO 2.1
+- teclado totalmente remapeável
+- gamepad remapeável com padrão Xbox/PlayStation
+- navegação dos menus por controle
+- vibração/haptics opcional em ataques e fusões
+- status de controle conectado nas Opções
+- mapeamento salvo automaticamente
+
+
+VERSÃO 2.2
+- Tutorial jogável automático na primeira partida
+- Manual / Como Jogar acessível pelo menu principal
+- Botão ? de ajuda diretamente na arena de duelo
+- Dicas contextuais para fusão, Guardian Stars, terreno, traps, rituais, batalha e ranking POW/TEC
+- Opção para ativar/desativar dicas durante o duelo
+- Tutorial compatível com teclado, toque e gamepad
+- Progresso do tutorial salvo no aparelho
+
+
+VERSÃO 2.3
+- câmera cinematográfica top-down ao invocar cartas
+- arena inteira fica visível durante a jogada
+- destaque luminoso no slot da carta invocada
+- retorno suave para a perspectiva clássica
+- mão do jogador menos intrusiva e mais integrada ao tabuleiro
+- painel de comandos e barra de informações refinados
+- respeita Reduzir Animações e qualidade gráfica

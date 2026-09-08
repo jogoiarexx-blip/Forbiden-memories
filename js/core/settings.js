@@ -3,7 +3,7 @@ const FDM_SETTINGS_KEY='fdm_settings_v2';
 const FDM_DEFAULT_SETTINGS={
   graphics:'auto', resolution:'auto', effects:'medium', glow:true, reducedMotion:false,
   performance:'balanced', fps:'auto', animationSpeed:'normal',
-  masterVolume:100, sfxVolume:70, musicVolume:60, muted:false
+  masterVolume:100, sfxVolume:70, musicVolume:60, muted:false, tutorialHints:true
 };
 let GAME_SETTINGS=loadGameSettings();
 let FDM_MUSIC=[];
@@ -53,7 +53,7 @@ function setGameSetting(key,value){
   if(!(key in FDM_DEFAULT_SETTINGS))return;GAME_SETTINGS[key]=value;saveGameSettings();applyGameSettings();
 }
 function syncOptionsUI(){
-  const map={optGraphics:'graphics',optResolution:'resolution',optEffects:'effects',optGlow:'glow',optReducedMotion:'reducedMotion',optPerformance:'performance',optFps:'fps',optAnimSpeed:'animationSpeed',optMasterVolume:'masterVolume',optSfxVolume:'sfxVolume',optMusicVolume:'musicVolume',optMuted:'muted'};
+  const map={optGraphics:'graphics',optResolution:'resolution',optEffects:'effects',optGlow:'glow',optReducedMotion:'reducedMotion',optPerformance:'performance',optFps:'fps',optAnimSpeed:'animationSpeed',optMasterVolume:'masterVolume',optSfxVolume:'sfxVolume',optMusicVolume:'musicVolume',optMuted:'muted',optTutorialHints:'tutorialHints'};
   Object.entries(map).forEach(([id,key])=>{const e=document.getElementById(id);if(!e)return;if(e.type==='checkbox')e.checked=!!GAME_SETTINGS[key];else e.value=String(GAME_SETTINGS[key])});
   [['masterVolumeOut','masterVolume'],['sfxVolumeOut','sfxVolume'],['musicVolumeOut','musicVolume']].forEach(([id,key])=>{let e=document.getElementById(id);if(e)e.textContent=Math.round(GAME_SETTINGS[key])+'%'});
   const hw=detectHardwareProfile(),label={low:'FRACO',medium:'MÉDIO',high:'FORTE'}[hw.tier];let p=document.getElementById('hardwareProfile'),d=document.getElementById('hardwareDetail');if(p)p.textContent=`${label} • Automático: ${resolvedGraphics().toUpperCase()} / ${resolvedResolution()}p / ${resolvedFPS()} FPS`;if(d)d.textContent=`CPU: ${hw.cores} threads • RAM estimada: ${hw.mem} GB • Tela: ${screen.width}×${screen.height}`;

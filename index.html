@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090812">
-<title>Forbidden Duel: Memories 2.0</title>
+<title>Forbidden Duel: Memories 2.3</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -26,10 +26,11 @@
   <button class="menuBtn" onclick="openFreeDuel()">Duelo Livre</button>
   <button class="menuBtn" onclick="openPasswordShop()">Password / Card Shop</button>
   <button class="menuBtn" onclick="openOptions()">Opções</button>
+  <button class="menuBtn" onclick="openTutorialGuide()">Tutorial / Como Jogar</button>
   <button id="btnNGPlus" class="menuBtn" style="display:none" onclick="startNewGamePlus()">New Game+</button>
   <button class="menuBtn" onclick="newSave()">Novo Jogo</button>
  </div>
- <div class="version">VERSÃO 2.0 • OPÇÕES • PERFORMANCE • ÁUDIO • PC + MOBILE</div>
+ <div class="version">VERSÃO 2.3 • CÂMERA TOP-DOWN • ARENA REFINADA • PC + MOBILE</div>
 </section>
 
 <section id="opponents" class="screen hidden">
@@ -146,8 +147,31 @@
     <label class="optionRow"><span><b>Silenciar tudo</b><small>Desativa efeitos e futuras músicas do jogo.</small></span><input id="optMuted" type="checkbox" onchange="setGameSetting('muted',this.checked)"></label>
     <button class="optionButton audioTest" onclick="testGameAudio()">TESTAR SOM</button>
    </div>
+
+   <div class="optionPanel ornate controlsPanel">
+    <h3>CONTROLES</h3>
+    <div class="controllerStatus"><b>GAMEPAD</b><span id="gamepadStatus">Nenhum controle conectado</span></div>
+    <label class="optionRow"><span><b>Vibração</b><small>Usa vibração em ataques e fusões quando o controle suporta.</small></span><input id="optGamepadVibration" type="checkbox" onchange="setInputOption('vibration',this.checked)"></label>
+    <label class="optionRow"><span><b>Dicas durante o duelo</b><small>Mostra explicações curtas na primeira vez que você usa cada sistema.</small></span><input id="optTutorialHints" type="checkbox" onchange="setGameSetting('tutorialHints',this.checked)"></label>
+    <div class="optionRow optionAction"><span><b>Reexibir tutorial</b><small>Marca o tutorial introdutório para aparecer no próximo duelo.</small></span><button class="optionButton" onclick="resetTutorialProgress()">REINICIAR</button></div>
+    <div class="controlSectionTitle">TECLADO</div>
+    <div id="keyboardBindings" class="bindingGrid"></div>
+    <div class="controlSectionTitle">GAMEPAD</div>
+    <div id="gamepadBindings" class="bindingGrid"></div>
+    <div class="controlHint">Durante o duelo, direcional/LB/RB navegam pela mão. Os comandos abaixo podem ser remapeados.</div>
+    <button class="optionButton" onclick="resetInputBindings()">RESTAURAR CONTROLES</button>
+   </div>
   </div>
   <div class="optionsFooter ornate"><span>As opções são salvas automaticamente neste aparelho.</span><button class="menuBtn primary" onclick="closeOptions()">SALVAR E VOLTAR</button></div>
+ </div>
+</section>
+
+<section id="tutorialScreen" class="screen hidden">
+ <div class="topbar"><button class="iconbtn" onclick="showScreen('title')">←</button><h2>Tutorial / Como Jogar</h2><span style="width:44px"></span></div>
+ <div class="contentScroll tutorialGuideWrap">
+  <div class="ornate tutorialHero"><div class="tutorialHeroSigil">𓂀</div><div><h3>MANUAL DO DUELISTA</h3><p>Aprenda as regras principais sem precisar decorar tudo de uma vez. As dicas também aparecem durante a primeira partida.</p></div></div>
+  <div id="tutorialGuideGrid" class="tutorialGuideGrid"></div>
+  <div class="ornate tutorialGuideActions"><button class="menuBtn primary" onclick="scheduleInteractiveTutorial()">INICIAR TUTORIAL NO PRÓXIMO DUELO</button><button class="menuBtn" onclick="showScreen('title')">VOLTAR AO MENU</button></div>
  </div>
 </section>
 
@@ -162,6 +186,7 @@
  <div class="ps1FieldPanel">
    <b>FIELD</b>
    <span id="fieldText">PRADARIA</span>
+   <button id="duelHelpBtn" class="duelHelpBtn" onclick="openDuelHelp()" title="Ajuda do duelo">?</button>
  </div>
 
  <div class="ps1StatusPanel">
@@ -225,6 +250,17 @@
 </div>
 
 </div>
+
+<div id="tutorialOverlay" class="tutorialOverlay hidden" aria-live="polite">
+ <div id="tutorialSpotlight" class="tutorialSpotlight"></div>
+ <div id="tutorialCoach" class="tutorialCoach ornate">
+   <div class="tutorialCoachTop"><span id="tutorialStepLabel">TUTORIAL 1/8</span><button onclick="skipInteractiveTutorial()">PULAR</button></div>
+   <h3 id="tutorialCoachTitle">BEM-VINDO AO DUELO</h3>
+   <p id="tutorialCoachText"></p>
+   <div class="tutorialCoachActions"><button id="tutorialPrev" onclick="tutorialPrevStep()">← ANTERIOR</button><button id="tutorialNext" class="primary" onclick="tutorialNextStep()">PRÓXIMO →</button></div>
+ </div>
+</div>
+<div id="tutorialHint" class="tutorialHint hidden"><b>DICA</b><span id="tutorialHintText"></span><button onclick="dismissTutorialHint()">×</button></div>
 
 <div id="loadingOverlay" class="loadingOverlay hidden" aria-live="polite">
   <div class="loadingPanel ornate">
@@ -308,6 +344,8 @@
 <script src="js/core/loader.js"></script>
 <script src="js/core/runtime.js"></script>
 <script src="js/core/settings.js"></script>
+<script src="js/core/controls.js"></script>
 <script src="js/ui/duel-screen.js"></script>
+<script src="js/ui/tutorial.js"></script>
 </body>
 </html>
