@@ -224,3 +224,24 @@ VERSÃO 2.3
 - mão do jogador menos intrusiva e mais integrada ao tabuleiro
 - painel de comandos e barra de informações refinados
 - respeita Reduzir Animações e qualidade gráfica
+
+
+VERSÃO 2.4
+- mão em leque e dock menos intrusivo
+- slots/tabuleiro refinados
+- câmera top-down ampliada
+- carta desliza da mão até o campo ao invocar
+- banner de troca de turno
+- feedback visual de dano/recuperação de LP
+- comandos destacam a ação contextual recomendada
+- alvos de ataque mais claros
+- melhorias para telas pequenas em modo paisagem
+
+
+VERSÃO 2.5
+- revisão visual profunda da área de duelo
+- arena com mais profundidade, textura e decoração ritual
+- preview ampliado da carta em foco
+- dica tática contextual acima dos comandos
+- HUD, tabuleiro, mão e comandos mais refinados
+- top-down mais amplo durante invocações

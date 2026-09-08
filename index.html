@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#090812">
-<title>Forbidden Duel: Memories 2.3</title>
+<title>Forbidden Duel: Memories 2.6</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
   <button id="btnNGPlus" class="menuBtn" style="display:none" onclick="startNewGamePlus()">New Game+</button>
   <button class="menuBtn" onclick="newSave()">Novo Jogo</button>
  </div>
- <div class="version">VERSÃO 2.3 • CÂMERA TOP-DOWN • ARENA REFINADA • PC + MOBILE</div>
+ <div class="version">VERSÃO 2.6 • CONTEXT COMMANDS • PORTRAITS • UNIQUE FIELDS</div>
 </section>
 
 <section id="opponents" class="screen hidden">
@@ -208,10 +208,14 @@
    <div id="fusionTray" class="hidden"></div>
  </div>
 
+ <div id="duelPreview" class="ps1CardPreview" aria-hidden="true"></div>
+
  <div class="cardHandArea ps1HandDock">
    <div class="handTitle">SUA MÃO</div>
    <div id="hand"></div>
  </div>
+
+ <div id="duelCommandHint" class="ps1CommandHint">Selecione uma carta da sua mão para começar.</div>
 
  <div class="controls ps1CommandPanel">
    <button id="btnPlay" class="action hot" onclick="playSelection()"><span>▶</span> JOGAR</button>
@@ -347,5 +351,8 @@
 <script src="js/core/controls.js"></script>
 <script src="js/ui/duel-screen.js"></script>
 <script src="js/ui/tutorial.js"></script>
+<script src="js/ui/polish-v24.js"></script>
+<script src="js/ui/polish-v25.js"></script>
+<script src="js/ui/polish-v26.js"></script>
 </body>
 </html>
